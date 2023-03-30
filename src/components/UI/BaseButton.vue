@@ -17,12 +17,12 @@ export default {
     },
     link: {
       type: Boolean,
-      required: true,
+      required: false,
       default: false,
     },
     to: {
       type: String,
-      required: true,
+      required: false,
       default: '/',
     },
   },
