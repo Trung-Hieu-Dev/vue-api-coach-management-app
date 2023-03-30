@@ -7,7 +7,13 @@
     </div>
     <ul v-if="hasCoaches">
       <li v-for="coach in filteredCoaches" :key="coach.id">
-        {{ coach.firstName }}
+        <CoachItem
+          :id="coach.id"
+          :firstName="coach.firstName"
+          :lastName="coach.lastName"
+          :areas="coach.areas"
+          :rate="coach.hourlyRate"
+        />
       </li>
     </ul>
     <h3 v-else>No coach found!</h3>
@@ -15,7 +21,12 @@
 </template>
 
 <script>
+import CoachItem from '../../components/coaches/CoachItem.vue';
+
 export default {
+  components: {
+    CoachItem,
+  },
   computed: {
     filteredCoaches() {
       return this.$store.getters['coaches/coaches']; //get data from vuex store
@@ -26,3 +37,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+</style>
