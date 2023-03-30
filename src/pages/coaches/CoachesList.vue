@@ -7,15 +7,15 @@
         <base-button link to="register">Register as Coach</base-button>
       </div>
       <ul v-if="hasCoaches">
-        <li v-for="coach in filteredCoaches" :key="coach.id">
-          <CoachItem
-            :id="coach.id"
-            :firstName="coach.firstName"
-            :lastName="coach.lastName"
-            :areas="coach.areas"
-            :rate="coach.hourlyRate"
-          />
-        </li>
+        <CoachItem
+          v-for="coach in filteredCoaches"
+          :key="coach.id"
+          :id="coach.id"
+          :firstName="coach.firstName"
+          :lastName="coach.lastName"
+          :areas="coach.areas"
+          :rate="coach.hourlyRate"
+        />
       </ul>
       <h3 v-else>No coach found!</h3>
     </base-card>

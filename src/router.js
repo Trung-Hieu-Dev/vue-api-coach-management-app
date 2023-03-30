@@ -5,7 +5,7 @@ import CoachesList from './pages/coaches/CoachesList.vue';
 import CoachDetail from './pages/coaches/CoachDetail.vue';
 import CoachRegister from './pages/coaches/CoachRegistation.vue';
 import ContactCoach from './pages/requests/ContactCoach.vue';
-import RequestsCoach from './pages/requests/RequestsReceived.vue';
+import RequestsReceived from './pages/requests/RequestsReceived.vue';
 import NotFound from './pages/NotFound.vue';
 
 const router = createRouter({
@@ -15,13 +15,14 @@ const router = createRouter({
     { path: '/coaches', component: CoachesList },
     {
       path: '/coaches/:id',
+      props: true,
       component: CoachDetail,
       children: [
         { path: 'contact', component: ContactCoach }, // coaches/c1/contact
       ],
     },
     { path: '/register', component: CoachRegister },
-    { path: '/requests', component: RequestsCoach }, // show all requests list
+    { path: '/requests', component: RequestsReceived }, // show all requests list
     { path: '/:notFound(.*)', component: NotFound },
   ],
 });
