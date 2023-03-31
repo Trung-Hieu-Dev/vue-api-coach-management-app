@@ -40,7 +40,10 @@ export default {
       return this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName;
     },
     contactLink() {
-      return this.id + '/contact';
+      if (this.$route.name == 'contact') {
+        return '';
+      }
+      return this.$route.path + '/contact';
     },
     areas() {
       return this.selectedCoach.areas;
