@@ -1,42 +1,64 @@
 <template>
-  <form>
+  <form @submit.prevent="submitForm">
     <div class="form-control">
       <label for="firstName">First Name</label>
-      <input type="text" id="firstName" />
+      <input type="text" id="firstName" v-model="firstName" />
     </div>
     <div class="form-control">
       <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" />
+      <input type="text" id="lastName" v-model.trim="lastName" />
     </div>
     <div class="form-control">
       <label for="description">Description</label>
-      <textarea rows="5" id="description"></textarea>
+      <textarea rows="5" id="description" v-model.trim="description"></textarea>
     </div>
     <div class="form-control">
       <label for="rate">Hourly Rate</label>
-      <input type="number" id="rate" />
+      <input type="number" id="rate" v-model.number="rate" />
     </div>
     <div class="form-control">
       <h3>Areas of Expertise</h3>
       <div>
-        <input type="checkbox" id="frontend" value="frontend" />
+        <input type="checkbox" id="frontend" value="frontend" v-model="areas" />
         <label for="frontend">Frontend Development</label>
       </div>
       <div>
-        <input type="checkbox" id="backend" value="backend" />
+        <input type="checkbox" id="backend" value="backend" v-model="areas" />
         <label for="backend">Backend Development</label>
       </div>
       <div>
-        <input type="checkbox" id="career" value="career" />
+        <input type="checkbox" id="career" value="career" v-model="areas" />
         <label for="career">Career</label>
       </div>
     </div>
-    <base-button>Register</base-button>
+    <base-button type="submit">Register</base-button>
   </form>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      firstName: '',
+      lastName: '',
+      description: '',
+      rate: null,
+      areas: [],
+    };
+  },
+  methods: {
+    submitForm() {
+      const formData = {
+        first: this.firstName,
+        last: this.lastName,
+        desc: this.description,
+        rate: this.rate,
+        areas: this.areas,
+      };
+      console.log(formData);
+    },
+  },
+};
 </script>
 
 <style scoped>

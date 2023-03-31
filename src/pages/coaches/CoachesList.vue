@@ -65,7 +65,6 @@ export default {
   methods: {
     getFilter(updatedFilters) {
       this.activeFilters = updatedFilters;
-      console.log(this.activeFilters);
     },
   },
 };
