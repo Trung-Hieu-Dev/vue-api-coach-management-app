@@ -1,6 +1,6 @@
 <template>
   <section>
-    <coach-filter></coach-filter>
+    <coach-filter @change-filter="getFilter"></coach-filter>
   </section>
   <section>
     <base-card>
@@ -33,12 +33,39 @@ export default {
     CoachItem,
     CoachFilter,
   },
+  data() {
+    return {
+      activeFilters: {
+        frontend: true,
+        backend: true,
+        career: true,
+      },
+    };
+  },
   computed: {
     filteredCoaches() {
-      return this.$store.getters['coaches/coaches']; //get data from vuex store
+      const coaches = this.$store.getters['coaches/coaches'];
+      return coaches.filter((coach) => {
+        if (coach.areas.includes('frontend') && this.activeFilters.frontend) {
+          return true;
+        }
+        if (coach.areas.includes('backend') && this.activeFilters.backend) {
+          return true;
+        }
+        if (coach.areas.includes('career') && this.activeFilters.career) {
+          return true;
+        }
+        return false;
+      });
     },
     hasCoaches() {
       return this.$store.getters['coaches/hasCoaches'];
+    },
+  },
+  methods: {
+    getFilter(updatedFilters) {
+      this.activeFilters = updatedFilters;
+      console.log(this.activeFilters);
     },
   },
 };
