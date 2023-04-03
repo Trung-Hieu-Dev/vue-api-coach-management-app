@@ -31,7 +31,11 @@ export default {
   },
 
   //get coaches list from server
-  async loadCoaches(context) {
+  async loadCoaches(context, payload) {
+    if (!payload.forcesRefresh && !context.getters.shouldUpdate) {
+      return;
+    }
+
     const response = await fetch(
       `https://vue-api-coach-management-app-default-rtdb.firebaseio.com/coaches.json`
     );
@@ -58,5 +62,6 @@ export default {
     }
 
     context.commit('setCoaches', coaches);
+    context.commit('setFetchTimestamp');
   },
 };
