@@ -1,12 +1,12 @@
 export default {
-  async registerCoach(context, data) {
+  async registerCoach(context, payload) {
     const userId = context.rootGetters.userId;
     const coachData = {
-      firstName: data.first,
-      lastName: data.last,
-      description: data.desc,
-      hourlyRate: data.rate,
-      areas: data.areas,
+      firstName: payload.first,
+      lastName: payload.last,
+      description: payload.desc,
+      hourlyRate: payload.rate,
+      areas: payload.areas,
     };
 
     //send coach to database on backend server

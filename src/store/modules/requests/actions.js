@@ -41,7 +41,7 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      const error = new Error(response.message || 'Fail to send request!');
+      const error = new Error(response.message || 'Fail to fetch request!');
       throw error;
     }
 
