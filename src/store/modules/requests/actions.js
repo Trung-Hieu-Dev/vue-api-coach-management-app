@@ -1,4 +1,5 @@
 export default {
+  //Post HTTP
   async contactCoach(context, payload) {
     const newRequest = {
       // id: new Date().toISOString,
@@ -29,5 +30,33 @@ export default {
     }
 
     context.commit('addRequest', responseData);
+  },
+
+  //Fetch HTTP
+  async fetchRequest(context) {
+    const coachId = context.rootGetters.userId;
+    const response = await fetch(
+      `https://vue-api-coach-management-app-default-rtdb.firebaseio.com/requests/${coachId}.json`
+    );
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(response.message || 'Fail to send request!');
+      throw error;
+    }
+
+    const requests = [];
+
+    for (const key in responseData) {
+      const request = {
+        id: key,
+        coachId: coachId,
+        email: responseData[key].email,
+        message: responseData[key].message,
+      };
+      requests.push(request);
+    }
+
+    context.commit('setRequests', requests);
   },
 };
