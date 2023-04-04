@@ -16,6 +16,8 @@ export default {
     );
 
     const responseData = await response.json();
+
+    //server validation
     if (!response.ok) {
       console.log(responseData);
       const error = new Error(
