@@ -35,8 +35,12 @@ export default {
   //Fetch HTTP
   async fetchRequest(context) {
     const coachId = context.rootGetters.userId;
+
+    //authenticated register coach
+    const token = context.rootGetters.token;
+
     const response = await fetch(
-      `https://vue-api-coach-management-app-default-rtdb.firebaseio.com/requests/${coachId}.json`
+      `https://vue-api-coach-management-app-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=${token}`
     );
     const responseData = await response.json();
 
