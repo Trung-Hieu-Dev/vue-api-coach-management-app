@@ -25,9 +25,9 @@
           characters at least!
         </p>
         <base-button>{{ submitButtonCaption }}</base-button>
-        <base-button type="button" mode="flat" @click="switchAuthMode">{{
-          switchModeButtonCaption
-        }}</base-button>
+        <base-button type="button" mode="flat" @click="switchAuthMode">
+          {{ switchModeButtonCaption }}
+        </base-button>
       </form>
     </base-card>
   </div>
@@ -83,10 +83,13 @@ export default {
       try {
         //send http request to get token
         if (this.mode === 'login') {
-          this.$store.dispatch('login', actionPayload);
+          await this.$store.dispatch('login', actionPayload);
         } else {
           await this.$store.dispatch('signup', actionPayload);
         }
+        const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+        //redirect to /coaches after success login || signup
+        this.$router.replace(redirectUrl);
       } catch (error) {
         this.error = error.message || 'Failed to authenticated!';
       }

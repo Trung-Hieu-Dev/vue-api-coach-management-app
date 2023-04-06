@@ -28,6 +28,8 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch('logout');
+      //redirect to /coaches after success login
+      this.$router.replace('/coaches');
     },
   },
 };
