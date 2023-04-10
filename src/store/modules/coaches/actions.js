@@ -9,9 +9,12 @@ export default {
       areas: payload.areas,
     };
 
+    //authenticated register coach
+    const token = context.rootGetters.token;
+
     //send coach to database on backend server
     const response = await fetch(
-      `https://vue-api-coach-management-app-default-rtdb.firebaseio.com/coaches/${userId}.json`,
+      `https://vue-api-coach-management-app-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=${token}`,
       {
         method: 'PUT',
         body: JSON.stringify(coachData),
