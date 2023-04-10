@@ -1,3 +1,5 @@
+let timer;
+
 export default {
   //login
   async login(context, payload) {
@@ -45,36 +47,63 @@ export default {
       throw error;
     }
 
+    //expiration time
+    // const expiresIn = +responseData.expiresIn * 1000;
+    const expiresIn = 5000;
+    const expirationDate = new Date().getTime() + expiresIn;
+
     //store token to local storage to prevent loosing login status when page reloaded
     localStorage.setItem('token', responseData.idToken);
     localStorage.setItem('userId', responseData.localId);
+    localStorage.setItem('tokenExpiration', expirationDate);
+
+    //logout automatically when time out
+    timer = setTimeout(function () {
+      context.dispatch('logout');
+    }, expiresIn);
 
     context.commit('setUser', {
       token: responseData.idToken,
       userId: responseData.localId,
-      tokenExpiration: responseData.expiresIn,
     });
   },
 
+  //keeping login state if page loaded
   tryLogin(context) {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
+    const tokenExpiration = localStorage.getItem('tokenExpiration');
+
+    const expiresIn = +tokenExpiration - new Date().getTime();
+
+    if (expiresIn < 0) {
+      return;
+    }
+
+    //logout automatically when time out
+    timer = setTimeout(function () {
+      context.dispatch('logout');
+    }, expiresIn);
 
     if (token && userId) {
       context.commit('setUser', {
         token: token,
         userId: userId,
-        tokenExpiration: null,
       });
     }
   },
 
   //Logout
   logout(context) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('tokenExpiration');
+
+    clearTimeout(timer);
+
     context.commit('setUser', {
       token: null,
       userId: null,
-      tokenExpiration: null,
     });
   },
 };
