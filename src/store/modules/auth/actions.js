@@ -48,8 +48,8 @@ export default {
     }
 
     //expiration time
-    // const expiresIn = +responseData.expiresIn * 1000;
-    const expiresIn = 5000;
+    const expiresIn = +responseData.expiresIn * 1000;
+    // const expiresIn = 5000;
     const expirationDate = new Date().getTime() + expiresIn;
 
     //store token to local storage to prevent loosing login status when page reloaded
@@ -59,7 +59,7 @@ export default {
 
     //logout automatically when time out
     timer = setTimeout(function () {
-      context.dispatch('logout');
+      context.dispatch('autoLogout');
     }, expiresIn);
 
     context.commit('setUser', {
@@ -82,7 +82,7 @@ export default {
 
     //logout automatically when time out
     timer = setTimeout(function () {
-      context.dispatch('logout');
+      context.dispatch('autoLogout');
     }, expiresIn);
 
     if (token && userId) {
@@ -105,5 +105,11 @@ export default {
       token: null,
       userId: null,
     });
+  },
+
+  //auto logout
+  autoLogout(context) {
+    context.dispatch('logout');
+    context.dispatch('setAutoLogout');
   },
 };
