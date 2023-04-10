@@ -8,9 +8,8 @@ import NotFound from './pages/NotFound.vue';
 //store
 import store from './store/index';
 
-const CoachDetail = defineAsyncComponent(() =>
-  import('./pages/coaches/CoachDetail.vue')
-);
+const CoachDetail = () => import('./pages/coaches/CoachDetail.vue');
+
 const CoachRegister = defineAsyncComponent(() =>
   import('./pages/coaches/CoachRegistation.vue')
 );
